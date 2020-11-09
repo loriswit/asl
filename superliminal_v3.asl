@@ -6,6 +6,13 @@ state("Superliminal") {
 	bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0xE8, 0x28, 0x80, 0x18;
 }
 
+state("SuperliminalSteam") {
+	byte levelID : 0xB00B1E5;
+	bool isLoading : 0xB00B1E6;
+
+	bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0xE8, 0x28, 0x80, 0x18;
+}
+
 startup {
 	print("hot coffee v3");
 }
