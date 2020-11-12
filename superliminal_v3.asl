@@ -133,8 +133,8 @@ split
     if (version == "srt")
     {
         // pos = [0, 0, 0] during loading screens
-        enteredNextLevel = old.timer == current.timer
-            && current.xPos != old.xPos && current.xPos == 0
+        enteredNextLevel =
+               current.xPos != old.xPos && current.xPos == 0
             && current.yPos != old.yPos && current.yPos == 0
             && current.zPos != old.zPos && current.zPos == 0;
 
