@@ -23,7 +23,7 @@ state("SuperliminalSteam")
 state("Superliminal", "srt")
 {
     // the number of seconds elapsed after entering induction
-    double timer : "mono-2.0-bdwgc.dll", 0x490a90, 0x2760, 0x118;
+    double timer : "UnityPlayer.dll", 0x168ee90, 0x8, 0xa0, 0x188, 0x118;
 
     // true whenever any alarm clock is clicked, set back to false when entering a level
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
@@ -37,7 +37,7 @@ state("Superliminal", "srt")
 // duplicate state matching the Steam process name
 state("SuperliminalSteam", "srt")
 {
-    double timer : "mono-2.0-bdwgc.dll", 0x490A90, 0x2760, 0x118;
+    double timer : "UnityPlayer.dll", 0x168ee90, 0x8, 0xa0, 0x188, 0x118;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     uint xPos : "UnityPlayer.dll", 0x168ec88, 0x78, 0x78, 0x60, 0x30, 0x8, 0x840, 0xd8;
     uint yPos : "UnityPlayer.dll", 0x168ec88, 0x78, 0x78, 0x60, 0x30, 0x8, 0x840, 0xdc;
