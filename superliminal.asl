@@ -65,6 +65,12 @@ state("SuperliminalSteam", "2021")
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
 }
 
+startup
+{
+    settings.Add("il", false, "Individual Level");
+    settings.SetToolTip("il", "Only works with game version 2021");
+}
+
 init
 {
     // check size of UnityPlayer.dll to determine version
@@ -88,6 +94,9 @@ init
         // be invalid for a few frames when entering a new scene
         vars.inLevel = false;
     }
+
+    if (vars.il = settings["il"])
+        print("Timing individual level");
 }
 
 update
@@ -103,11 +112,18 @@ update
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
             vars.inLevel = true;
     }
+
+    if (settings["il"])
+    {
+        // use regular timing method for Induction and for older game versions
+        const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
+        vars.il = version == "2021" && current.scene != Induction;
+    }
 }
 
 gameTime
 {
-    if (version != "2019")
+    if (version != "2019" && !vars.il)
         return TimeSpan.FromSeconds(current.timer);
 
     return null;
@@ -117,7 +133,10 @@ isLoading
 {
     bool loading = false;
 
-    if (version == "2019")
+    if (vars.il)
+        loading = false;
+
+    else if (version == "2019")
         loading = current.isLoading;
 
     else
@@ -130,7 +149,14 @@ start
 {
     bool startedInduction = false;
 
-    if (version == "2019")
+    if (vars.il)
+    {
+        const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
+        bool inLevel = current.scene != null && current.scene.StartsWith(LevelPrefix);
+        startedInduction = inLevel && current.scene != old.scene;
+    }
+
+    else if (version == "2019")
         startedInduction = current.levelID == 1 && current.levelID != old.levelID;
 
     else
