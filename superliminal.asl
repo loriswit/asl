@@ -50,6 +50,11 @@ state("Superliminal", "2021")
     // the number of seconds elapsed after entering induction
     double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x128;
 
+    // the pointer to the name of the checkpoint
+    // Note: the pointer might be null in main menu / loading screen
+    //       hence we use a pointer instead.
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
+
     // true whenever any alarm clock is clicked, set back to false when entering a level
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
 
@@ -61,6 +66,7 @@ state("Superliminal", "2021")
 state("SuperliminalSteam", "2021")
 {
     double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x128;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
 }
@@ -69,6 +75,9 @@ startup
 {
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021");
+
+    settings.Add("split_on_cp", false, "Split on checkpoints (use with subsplits for CPs)");
+    settings.SetToolTip("split_on_cp", "Only works with game version 2021");
 }
 
 init
@@ -93,6 +102,17 @@ init
         // this is required because the 'scene' pointer seems to
         // be invalid for a few frames when entering a new scene
         vars.inLevel = false;
+
+        // the name of the checkpoint, 
+        //   corresponding to current.checkpointNamePtr
+        //                    and old.checkpointNamePtr
+        vars.cp_name = "";
+        vars.old_cp_name = "";
+
+        if(settings["split_on_cp"]) {
+            vars.split_on_cp = true;
+            print("Splitting on checkpoints");
+        }
     }
 
     if (vars.il = settings["il"])
@@ -111,6 +131,13 @@ update
         const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
             vars.inLevel = true;
+        
+        vars.split_on_cp = settings["split_on_cp"];
+
+        vars.old_cp_name = vars.cp_name;
+        if(current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) {
+            vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
+        }
     }
 
     if (settings["il"])
@@ -199,6 +226,7 @@ split
 {
     bool enteredNextLevel = false;
     bool finalAlarmClicked = false;
+    bool checkpointUpdated = false;
 
     if (version == "2019")
     {
@@ -233,8 +261,16 @@ split
 
             const string Retrospect = "Assets/_Levels/_LiveFolder/ACT03/EndingMontage/EndingMontage_Live.unity";
             finalAlarmClicked = current.scene == Retrospect && current.alarmStopped;
+
+            if (vars.split_on_cp
+                && vars.inLevel 
+                && current.checkpointNamePtr != 0 
+                && !vars.cp_name.Equals(vars.old_cp_name)
+                && !vars.cp_name.Equals("")) {
+                checkpointUpdated = true;
+            }
         }
     }
 
-    return enteredNextLevel || finalAlarmClicked;
+    return enteredNextLevel || finalAlarmClicked || checkpointUpdated;
 }
