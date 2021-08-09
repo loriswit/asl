@@ -109,7 +109,7 @@ init
         vars.cp_name = "";
         vars.old_cp_name = "";
 
-        if(settings["split_on_cp"]) {
+        if (settings["split_on_cp"]) {
             vars.split_on_cp = true;
             print("Splitting on checkpoints");
         }
@@ -135,7 +135,7 @@ update
         vars.split_on_cp = settings["split_on_cp"];
 
         vars.old_cp_name = vars.cp_name;
-        if(current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) {
+        if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) {
             vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
         }
     }
