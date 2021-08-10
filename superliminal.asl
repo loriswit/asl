@@ -86,6 +86,9 @@ startup
 
     settings.Add("split_on_cp", false, "Split on checkpoints");
     settings.SetToolTip("split_on_cp", "Use this with a split file that supports checkpoints.");
+
+    settings.Add("skip_ParkingLot", false, "Skip checkpoint \"_ParkingLot\"");
+    settings.SetToolTip("skip_ParkingLot", "Skips the last checkpoint in Labyrinth to avoid an error.");
 }
 
 init
@@ -276,7 +279,8 @@ split
     if (vars.split_on_cp
         && current.checkpointNamePtr != 0 
         && !vars.cp_name.Equals(vars.old_cp_name)
-        && !vars.cp_name.Equals("")) {
+        && !vars.cp_name.Equals("")
+        && !(settings["skip_ParkingLot"] && vars.cp_name.Equals("_ParkingLot"))) {
         checkpointUpdated = true;
     }
 
