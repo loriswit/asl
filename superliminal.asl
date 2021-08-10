@@ -88,7 +88,7 @@ startup
     settings.SetToolTip("split_on_cp", "Use this with a split file that supports checkpoints.");
 
     settings.Add("skip_ParkingLot", false, "Skip checkpoint \"_ParkingLot\"");
-    settings.SetToolTip("skip_ParkingLot", "Skips the last checkpoint in Labyrinth to avoid an error.");
+    settings.SetToolTip("skip_ParkingLot", "Skips the last CP in Labyrinth to avoid an inconsistent CP skip.");
 }
 
 init
