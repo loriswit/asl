@@ -86,6 +86,9 @@ startup
 
     settings.Add("split_on_cp", false, "Split on checkpoints");
     settings.SetToolTip("split_on_cp", "Use this with a split file that supports checkpoints.");
+
+    settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
+    settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
 }
 
 init
@@ -118,7 +121,8 @@ init
     vars.cp_name = "";
     vars.old_cp_name = "";
 
-    if (settings["split_on_cp"]) {
+    if (settings["split_on_cp"])
+    {
         vars.split_on_cp = true;
         print("Splitting on checkpoints");
     }
@@ -145,9 +149,8 @@ update
     vars.split_on_cp = settings["split_on_cp"];
 
     vars.old_cp_name = vars.cp_name;
-    if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) {
+    if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
         vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
-    }
 
     if (settings["il"])
     {
@@ -273,12 +276,11 @@ split
         }
     }
     
-    if (vars.split_on_cp
-        && current.checkpointNamePtr != 0 
-        && !vars.cp_name.Equals(vars.old_cp_name)
-        && !vars.cp_name.Equals("")) {
-        checkpointUpdated = true;
-    }
+    if (vars.split_on_cp)
+        checkpointUpdated = current.checkpointNamePtr != 0 
+            && !vars.cp_name.Equals(vars.old_cp_name)
+            && !vars.cp_name.Equals("")
+            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated;
 }
