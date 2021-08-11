@@ -268,24 +268,6 @@ reset
 
 split
 {
-    Func<byte[],byte[],bool> arrayEquals = (a1, a2) => {
-        if (a1 == a2)
-            return true;
-
-        if (a1 == null || a2 == null)
-            return false;
-
-        if (a1.Length != a2.Length)
-            return false;
-
-        for (int i = 0; i < a1.Length; i++)
-        {
-            if (a1[i] != a2[i])
-                return false;
-        }
-        return true;
-    };
-
     bool enteredNextLevel = false;
     bool finalAlarmClicked = false;
     bool checkpointUpdated = false;
@@ -325,13 +307,13 @@ split
             const string Retrospect = "Assets/_Levels/_LiveFolder/ACT03/EndingMontage/EndingMontage_Live.unity";
             finalAlarmClicked = current.scene == Retrospect && current.alarmStopped;
             
-            bool diffFireAlarm = settings["split_on_FireAlarm"] && !arrayEquals(current.statusFireAlarm, old.statusFireAlarm);
-            bool diffExtinguisher = settings["split_on_Extinguisher"] && !arrayEquals(current.statusExtinguisher, old.statusExtinguisher);
-            bool diffConstellation = settings["split_on_Constellation"] && !arrayEquals(current.statusConstellation, old.statusConstellation);
-            bool diffChessPiece = settings["split_on_ChessPiece"] && !arrayEquals(current.statusChessPiece, old.statusChessPiece);
-            bool diffBlueprint = settings["split_on_Blueprint"] && !arrayEquals(current.statusBlueprint, old.statusBlueprint);
-            bool diffSodaType = settings["split_on_SodaType"] && !arrayEquals(current.statusSodaType, old.statusSodaType);
-            bool diffActualEggs = settings["split_on_ActualEggs"] && !arrayEquals(current.statusActualEggs, old.statusActualEggs);
+            bool diffFireAlarm = settings["split_on_FireAlarm"] && !Enumerable.SequenceEqual(current.statusFireAlarm, old.statusFireAlarm);
+            bool diffExtinguisher = settings["split_on_Extinguisher"] && !Enumerable.SequenceEqual(current.statusExtinguisher, old.statusExtinguisher);
+            bool diffConstellation = settings["split_on_Constellation"] && !Enumerable.SequenceEqual(current.statusConstellation, old.statusConstellation);
+            bool diffChessPiece = settings["split_on_ChessPiece"] && !Enumerable.SequenceEqual(current.statusChessPiece, old.statusChessPiece);
+            bool diffBlueprint = settings["split_on_Blueprint"] && !Enumerable.SequenceEqual(current.statusBlueprint, old.statusBlueprint);
+            bool diffSodaType = settings["split_on_SodaType"] && !Enumerable.SequenceEqual(current.statusSodaType, old.statusSodaType);
+            bool diffActualEggs = settings["split_on_ActualEggs"] && !Enumerable.SequenceEqual(current.statusActualEggs, old.statusActualEggs);
 
             collectibleUpdated |= diffFireAlarm;
             collectibleUpdated |= diffExtinguisher;
