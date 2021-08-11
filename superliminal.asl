@@ -280,7 +280,7 @@ split
         checkpointUpdated = current.checkpointNamePtr != 0 
             && !vars.cp_name.Equals(vars.old_cp_name)
             && !vars.cp_name.Equals("")
-            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))
+            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"));
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated;
 }
