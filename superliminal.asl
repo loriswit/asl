@@ -106,7 +106,6 @@ startup
 
     settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
     settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
-<<<<<<< HEAD
 
     settings.Add("split_on_FireAlarm", false, "Split on fire alarms");
     settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers");
@@ -122,8 +121,6 @@ startup
     settings.SetToolTip("split_on_Blueprint", "Only works in game ver 2021");
     settings.SetToolTip("split_on_SodaType", "Only works in game ver 2021");
     settings.SetToolTip("split_on_ActualEggs", "Only works in game ver 2021");
-=======
->>>>>>> upstream/main
 }
 
 init
@@ -328,21 +325,21 @@ split
             const string Retrospect = "Assets/_Levels/_LiveFolder/ACT03/EndingMontage/EndingMontage_Live.unity";
             finalAlarmClicked = current.scene == Retrospect && current.alarmStopped;
             
-            bool diffFireAlarm = !arrayEquals(current.statusFireAlarm, old.statusFireAlarm);
-            bool diffExtinguisher = !arrayEquals(current.statusExtinguisher, old.statusExtinguisher);
-            bool diffConstellation = !arrayEquals(current.statusConstellation, old.statusConstellation);
-            bool diffChessPiece = !arrayEquals(current.statusChessPiece, old.statusChessPiece);
-            bool diffBlueprint = !arrayEquals(current.statusBlueprint, old.statusBlueprint);
-            bool diffSodaType = !arrayEquals(current.statusSodaType, old.statusSodaType);
-            bool diffActualEggs = !arrayEquals(current.statusActualEggs, old.statusActualEggs);
+            bool diffFireAlarm = settings["split_on_FireAlarm"] && !arrayEquals(current.statusFireAlarm, old.statusFireAlarm);
+            bool diffExtinguisher = settings["split_on_Extinguisher"] && !arrayEquals(current.statusExtinguisher, old.statusExtinguisher);
+            bool diffConstellation = settings["split_on_Constellation"] && !arrayEquals(current.statusConstellation, old.statusConstellation);
+            bool diffChessPiece = settings["split_on_ChessPiece"] && !arrayEquals(current.statusChessPiece, old.statusChessPiece);
+            bool diffBlueprint = settings["split_on_Blueprint"] && !arrayEquals(current.statusBlueprint, old.statusBlueprint);
+            bool diffSodaType = settings["split_on_SodaType"] && !arrayEquals(current.statusSodaType, old.statusSodaType);
+            bool diffActualEggs = settings["split_on_ActualEggs"] && !arrayEquals(current.statusActualEggs, old.statusActualEggs);
 
-            collectibleUpdated |= settings["split_on_FireAlarm"] && diffFireAlarm;
-            collectibleUpdated |= settings["split_on_Extinguisher"] && diffExtinguisher;
-            collectibleUpdated |= settings["split_on_Constellation"] && diffConstellation;
-            collectibleUpdated |= settings["split_on_ChessPiece"] && diffChessPiece;
-            collectibleUpdated |= settings["split_on_Blueprint"] && diffBlueprint;
-            collectibleUpdated |= settings["split_on_SodaType"] && diffSodaType;
-            collectibleUpdated |= settings["split_on_ActualEggs"] && diffActualEggs;
+            collectibleUpdated |= diffFireAlarm;
+            collectibleUpdated |= diffExtinguisher;
+            collectibleUpdated |= diffConstellation;
+            collectibleUpdated |= diffChessPiece;
+            collectibleUpdated |= diffBlueprint;
+            collectibleUpdated |= diffSodaType;
+            collectibleUpdated |= diffActualEggs;
         }
     }
     
