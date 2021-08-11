@@ -106,6 +106,7 @@ startup
 
     settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
     settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
+<<<<<<< HEAD
 
     settings.Add("split_on_FireAlarm", false, "Split on fire alarms");
     settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers");
@@ -121,6 +122,8 @@ startup
     settings.SetToolTip("split_on_Blueprint", "Only works in game ver 2021");
     settings.SetToolTip("split_on_SodaType", "Only works in game ver 2021");
     settings.SetToolTip("split_on_ActualEggs", "Only works in game ver 2021");
+=======
+>>>>>>> upstream/main
 }
 
 init
@@ -153,7 +156,8 @@ init
     vars.cp_name = "";
     vars.old_cp_name = "";
 
-    if (settings["split_on_cp"]) {
+    if (settings["split_on_cp"])
+    {
         vars.split_on_cp = true;
         print("Splitting on checkpoints");
     }
@@ -180,9 +184,8 @@ update
     vars.split_on_cp = settings["split_on_cp"];
 
     vars.old_cp_name = vars.cp_name;
-    if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) {
+    if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
         vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
-    }
 
     if (settings["il"])
     {
@@ -343,13 +346,11 @@ split
         }
     }
     
-    if (vars.split_on_cp
-        && current.checkpointNamePtr != 0 
-        && !vars.cp_name.Equals(vars.old_cp_name)
-        && !vars.cp_name.Equals("")
-        && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))) {
-        checkpointUpdated = true;
-    }
+    if (vars.split_on_cp)
+        checkpointUpdated = current.checkpointNamePtr != 0 
+            && !vars.cp_name.Equals(vars.old_cp_name)
+            && !vars.cp_name.Equals("")
+            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"));
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated || collectibleUpdated;
 }
