@@ -4,6 +4,11 @@ state("Superliminal", "2019")
     // the current level number (1 for induction, 9 for retrospect, 255 for main menu and loading screens)
     byte levelID : 0xb00b1e5;
 
+    // the pointer to the name of the checkpoint
+    // Note: the pointer might be null in main menu / loading screen
+    //       hence we use a pointer instead.
+    long checkpointNamePtr : "UnityPlayer.dll", 0x163d080, 0x8, 0xb0, 0x28, 0x60;
+
     // true during loading screens
     bool isLoading : 0xb00b1e6;
 
@@ -15,6 +20,7 @@ state("Superliminal", "2019")
 state("SuperliminalSteam", "2019")
 {
     byte levelID : 0xb00b1e5;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x163d080, 0x8, 0xb0, 0x28, 0x60;
     bool isLoading : 0xb00b1e6;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0xe8, 0x28, 0x80, 0x18;
 }
@@ -24,6 +30,9 @@ state("Superliminal", "2020")
 {
     // the number of seconds elapsed after entering induction
     double timer : "UnityPlayer.dll", 0x168ee90, 0x8, 0xa0, 0x188, 0x118;
+
+    // the pointer to the name of the checkpoint
+    long checkpointNamePtr : "UnityPlayer.dll", 0x168ee90, 0x8, 0xb0, 0x28, 0xa0;
 
     // true whenever any alarm clock is clicked, set back to false when entering a level
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
@@ -38,6 +47,7 @@ state("Superliminal", "2020")
 state("SuperliminalSteam", "2020")
 {
     double timer : "UnityPlayer.dll", 0x168ee90, 0x8, 0xa0, 0x188, 0x118;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x168ee90, 0x8, 0xb0, 0x28, 0xa0;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     uint xPos : "UnityPlayer.dll", 0x168ec88, 0x78, 0x78, 0x60, 0x30, 0x8, 0x840, 0xd8;
     uint yPos : "UnityPlayer.dll", 0x168ec88, 0x78, 0x78, 0x60, 0x30, 0x8, 0x840, 0xdc;
@@ -51,8 +61,6 @@ state("Superliminal", "2021")
     double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x128;
 
     // the pointer to the name of the checkpoint
-    // Note: the pointer might be null in main menu / loading screen
-    //       hence we use a pointer instead.
     long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
 
     // true whenever any alarm clock is clicked, set back to false when entering a level
@@ -76,8 +84,11 @@ startup
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021");
 
-    settings.Add("split_on_cp", false, "Split on checkpoints (use with subsplits for CPs)");
-    settings.SetToolTip("split_on_cp", "Only works with game version 2021");
+    settings.Add("split_on_cp", false, "Split on checkpoints");
+    settings.SetToolTip("split_on_cp", "Use this with a split file that supports checkpoints.");
+
+    settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
+    settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
 }
 
 init
@@ -102,17 +113,18 @@ init
         // this is required because the 'scene' pointer seems to
         // be invalid for a few frames when entering a new scene
         vars.inLevel = false;
+    }
 
-        // the name of the checkpoint, 
-        //   corresponding to current.checkpointNamePtr
-        //                    and old.checkpointNamePtr
-        vars.cp_name = "";
-        vars.old_cp_name = "";
+    // the name of the checkpoint, 
+    //   corresponding to current.checkpointNamePtr
+    //                    and old.checkpointNamePtr
+    vars.cp_name = "";
+    vars.old_cp_name = "";
 
-        if (settings["split_on_cp"]) {
-            vars.split_on_cp = true;
-            print("Splitting on checkpoints");
-        }
+    if (settings["split_on_cp"])
+    {
+        vars.split_on_cp = true;
+        print("Splitting on checkpoints");
     }
 
     if (vars.il = settings["il"])
@@ -132,13 +144,13 @@ update
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
             vars.inLevel = true;
         
-        vars.split_on_cp = settings["split_on_cp"];
-
-        vars.old_cp_name = vars.cp_name;
-        if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) {
-            vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
-        }
     }
+
+    vars.split_on_cp = settings["split_on_cp"];
+
+    vars.old_cp_name = vars.cp_name;
+    if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
+        vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
 
     if (settings["il"])
     {
@@ -261,16 +273,14 @@ split
 
             const string Retrospect = "Assets/_Levels/_LiveFolder/ACT03/EndingMontage/EndingMontage_Live.unity";
             finalAlarmClicked = current.scene == Retrospect && current.alarmStopped;
-
-            if (vars.split_on_cp
-                && vars.inLevel 
-                && current.checkpointNamePtr != 0 
-                && !vars.cp_name.Equals(vars.old_cp_name)
-                && !vars.cp_name.Equals("")) {
-                checkpointUpdated = true;
-            }
         }
     }
+    
+    if (vars.split_on_cp)
+        checkpointUpdated = current.checkpointNamePtr != 0 
+            && !vars.cp_name.Equals(vars.old_cp_name)
+            && !vars.cp_name.Equals("")
+            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"));
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated;
 }
