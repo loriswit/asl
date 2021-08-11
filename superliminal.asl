@@ -68,6 +68,15 @@ state("Superliminal", "2021")
 
     // the active scene filename
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+
+    // status arrays for each of the 7 types of player actions.
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
 // duplicate state matching the Steam process name
@@ -77,6 +86,14 @@ state("SuperliminalSteam", "2021")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+    
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
 startup
@@ -89,6 +106,21 @@ startup
 
     settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
     settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
+
+    settings.Add("split_on_FireAlarm", false, "Split on fire alarms");
+    settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers");
+    settings.Add("split_on_Constellation", false, "Split on seeing constellations");
+    settings.Add("split_on_ChessPiece", false, "Split on clicking collectible chess pieces");
+    settings.Add("split_on_Blueprint", false, "Split on clicking blueprints");
+    settings.Add("split_on_SodaType", false, "Split on getting each of the 7 soda types");
+    settings.Add("split_on_ActualEggs", false, "Split on collecting literal Easter eggs");
+    settings.SetToolTip("split_on_FireAlarm", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_Extinguisher", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_Constellation", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_ChessPiece", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_Blueprint", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_SodaType", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_ActualEggs", "Only works in game ver 2021");
 }
 
 init
@@ -239,6 +271,7 @@ split
     bool enteredNextLevel = false;
     bool finalAlarmClicked = false;
     bool checkpointUpdated = false;
+    bool collectibleUpdated = false;
 
     if (version == "2019")
     {
@@ -273,6 +306,22 @@ split
 
             const string Retrospect = "Assets/_Levels/_LiveFolder/ACT03/EndingMontage/EndingMontage_Live.unity";
             finalAlarmClicked = current.scene == Retrospect && current.alarmStopped;
+            
+            bool diffFireAlarm = settings["split_on_FireAlarm"] && !Enumerable.SequenceEqual(current.statusFireAlarm, old.statusFireAlarm);
+            bool diffExtinguisher = settings["split_on_Extinguisher"] && !Enumerable.SequenceEqual(current.statusExtinguisher, old.statusExtinguisher);
+            bool diffConstellation = settings["split_on_Constellation"] && !Enumerable.SequenceEqual(current.statusConstellation, old.statusConstellation);
+            bool diffChessPiece = settings["split_on_ChessPiece"] && !Enumerable.SequenceEqual(current.statusChessPiece, old.statusChessPiece);
+            bool diffBlueprint = settings["split_on_Blueprint"] && !Enumerable.SequenceEqual(current.statusBlueprint, old.statusBlueprint);
+            bool diffSodaType = settings["split_on_SodaType"] && !Enumerable.SequenceEqual(current.statusSodaType, old.statusSodaType);
+            bool diffActualEggs = settings["split_on_ActualEggs"] && !Enumerable.SequenceEqual(current.statusActualEggs, old.statusActualEggs);
+
+            collectibleUpdated |= diffFireAlarm;
+            collectibleUpdated |= diffExtinguisher;
+            collectibleUpdated |= diffConstellation;
+            collectibleUpdated |= diffChessPiece;
+            collectibleUpdated |= diffBlueprint;
+            collectibleUpdated |= diffSodaType;
+            collectibleUpdated |= diffActualEggs;
         }
     }
     
@@ -282,5 +331,5 @@ split
             && !vars.cp_name.Equals("")
             && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"));
 
-    return enteredNextLevel || finalAlarmClicked || checkpointUpdated;
+    return enteredNextLevel || finalAlarmClicked || checkpointUpdated || collectibleUpdated;
 }
