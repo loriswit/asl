@@ -96,6 +96,31 @@ state("SuperliminalSteam", "2021")
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
+// Game Pass PC .6.8.25.1006
+state("Superliminal", "GamePassPC2021")
+{
+    // the number of seconds elapsed after entering induction
+    double timer : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0x60;
+
+    // the pointer to the name of the checkpoint
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xe8;
+
+    // true when finished Retro
+    bool alarmStopped : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0x80;
+
+    // the active scene filename
+    string255 scene : "UnityPlayer.dll", 0x1823d68, 0x48, 0x10, 0x0;
+
+    // status arrays for each of the 7 types of player actions.
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0xc0, 0x20;
+}
+
 startup
 {
     settings.Add("il", false, "Individual Level");
@@ -136,6 +161,13 @@ init
         print("Using in-game speedrun timer");
         version = "2020";
     }
+    else if (modules[4].ModuleMemorySize == 26968064)
+    {
+        print("Game Pass PC: Using scene filename and in-game speedrun timer");
+        version = "GamePassPC2021";
+
+        vars.inLevel = false;
+    }
     else // 26861568 or 589824
     {
         print("Using scene filename and in-game speedrun timer");
@@ -170,7 +202,7 @@ update
         current.levelID = memory.ReadValue<byte>(new IntPtr(0xb00b1e5));
         current.isLoading = memory.ReadValue<bool>(new IntPtr(0xb00b1e6));
     }
-    else if (version == "2021")
+    else if (version == "2021" || version == "GamePassPC2021")
     {
         const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
@@ -188,7 +220,7 @@ update
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il = version == "2021" && current.scene != Induction;
+        vars.il = (version == "2021" || version == "GamePassPC2021") && current.scene != Induction;
     }
 }
 
@@ -293,7 +325,7 @@ split
         finalAlarmClicked = timer.CurrentSplitIndex == 8 && current.alarmStopped;
     }
 
-    else if (version == "2021")
+    else if (version == "2021" || version == "GamePassPC2021")
     {
         if (current.scene != null)
         {
