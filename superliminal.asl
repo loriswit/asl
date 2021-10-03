@@ -99,19 +99,11 @@ state("SuperliminalSteam", "2021")
 // Game Pass PC .6.8.25.1006
 state("Superliminal", "GamePassPC2021")
 {
-    // the number of seconds elapsed after entering induction
     double timer : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0x60;
-
-    // the pointer to the name of the checkpoint
     long checkpointNamePtr : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xe8;
-
-    // true when finished Retro
     bool alarmStopped : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0x80;
-
-    // the active scene filename
     string255 scene : "UnityPlayer.dll", 0x1823d68, 0x48, 0x10, 0x0;
 
-    // status arrays for each of the 7 types of player actions.
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x48, 0x20;
     byte7  statusConstellation : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x60, 0x20;
@@ -120,7 +112,6 @@ state("Superliminal", "GamePassPC2021")
     byte7  statusSodaType      : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0xa8, 0x20;
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0xc0, 0x20;
 }
-
 startup
 {
     settings.Add("il", false, "Individual Level");
