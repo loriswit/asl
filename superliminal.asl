@@ -122,6 +122,8 @@ startup
 
     settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
     settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
+    settings.Add("split_WalkThroughShadow", false, "Split on checkpoint \"_WalkThroughShadow\"");
+    settings.SetToolTip("split_WalkThroughShadow", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
 
     settings.Add("split_on_FireAlarm", false, "Split on fire alarms");
     settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers");
@@ -352,7 +354,8 @@ split
         checkpointUpdated = current.checkpointNamePtr != 0 
             && !vars.cp_name.Equals(vars.old_cp_name)
             && !vars.cp_name.Equals("")
-            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"));
+            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))
+            && (settings["split_WalkThroughShadow"] || !vars.cp_name.Equals("_WalkThroughShadow"));
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated || collectibleUpdated;
 }
