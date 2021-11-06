@@ -175,20 +175,25 @@ init
     }
     else // 26861568 or 589824
     {
+        // the module size is the same in version 1.10.2021.11.5 (multiplayer update), but the pointers are different
         bool mpUpdate = false;
         
-        if (game.ProcessName == "SuperliminalSteam") {
+        if (game.ProcessName == "SuperliminalSteam")
+        {
+            // we check the size of Assembly-CSharp.dll to determine correct version
             string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
             long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize == 1790464) {
+            if (dllSize == 1790464)
                 mpUpdate = true;
-            }
         }
 
-        if (mpUpdate) {
+        if (mpUpdate)
+        {
             print("MP updated version");
             version = "2021mp";
-        } else {
+        }
+        else
+        {
             print("Using scene filename and in-game speedrun timer");
             version = "2021";
         }
