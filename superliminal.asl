@@ -145,7 +145,7 @@ startup
     settings.Add("split_WalkThroughShadow", false, "Split on checkpoint \"_WalkThroughShadow\"", "split_on_cp");
     settings.SetToolTip("split_WalkThroughShadow", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
 
-    settings.Add("split_on_collectibles", false);
+    settings.Add("split_on_collectibles", false, "Enabling splitting on collectibles");
     settings.Add("split_on_FireAlarm", false, "Split on fire alarms", "split_on_collectibles");
     settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers", "split_on_collectibles");
     settings.Add("split_on_Constellation", false, "Split on seeing constellations", "split_on_collectibles");
