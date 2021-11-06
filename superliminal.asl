@@ -131,9 +131,6 @@ state("Superliminal", "GamePassPC2021")
 }
 startup
 {
-    settings.Add("mp_update", true, "Multiplayer Update");
-    settings.SetToolTip("mp_update", "Check this if you received the multiplayer update");
-
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021");
 
@@ -178,7 +175,17 @@ init
     }
     else // 26861568 or 589824
     {
-        if (settings["mp_update"]) {
+        bool mpUpdate = false;
+        
+        if (game.ProcessName == "SuperliminalSteam") {
+            string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
+            long dllSize = new System.IO.FileInfo(dllPath).Length;
+            if (dllSize == 1790464) {
+                mpUpdate = true;
+            }
+        }
+
+        if (mpUpdate) {
             print("MP updated version");
             version = "2021mp";
         } else {
