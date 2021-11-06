@@ -96,6 +96,23 @@ state("SuperliminalSteam", "2021")
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
+// updated for version 1.10.2021.11.5.550.43
+state("SuperliminalSteam", "2021mp")
+{
+    double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+    
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
 // Game Pass PC .6.8.25.1006
 state("Superliminal", "GamePassPC2021")
 {
@@ -114,31 +131,29 @@ state("Superliminal", "GamePassPC2021")
 }
 startup
 {
+    settings.Add("mp_update", true, "Multiplayer Update");
+    settings.SetToolTip("mp_update", "Check this if you received the multiplayer update");
+
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021");
 
     settings.Add("split_on_cp", false, "Split on checkpoints");
     settings.SetToolTip("split_on_cp", "Use this with a split file that supports checkpoints.");
 
-    settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"");
+    settings.Add("split_ParkingLot", false, "Split on checkpoint \"_ParkingLot\"", "split_on_cp");
     settings.SetToolTip("split_ParkingLot", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
-    settings.Add("split_WalkThroughShadow", false, "Split on checkpoint \"_WalkThroughShadow\"");
+    settings.Add("split_WalkThroughShadow", false, "Split on checkpoint \"_WalkThroughShadow\"", "split_on_cp");
     settings.SetToolTip("split_WalkThroughShadow", "This CP is ignored by default to avoid an inconsistent CP skip.\nEnable this with caution.");
 
-    settings.Add("split_on_FireAlarm", false, "Split on fire alarms");
-    settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers");
-    settings.Add("split_on_Constellation", false, "Split on seeing constellations");
-    settings.Add("split_on_ChessPiece", false, "Split on clicking collectible chess pieces");
-    settings.Add("split_on_Blueprint", false, "Split on clicking blueprints");
-    settings.Add("split_on_SodaType", false, "Split on getting each of the 7 soda types");
-    settings.Add("split_on_ActualEggs", false, "Split on collecting literal Easter eggs");
-    settings.SetToolTip("split_on_FireAlarm", "Only works in game ver 2021");
-    settings.SetToolTip("split_on_Extinguisher", "Only works in game ver 2021");
-    settings.SetToolTip("split_on_Constellation", "Only works in game ver 2021");
-    settings.SetToolTip("split_on_ChessPiece", "Only works in game ver 2021");
-    settings.SetToolTip("split_on_Blueprint", "Only works in game ver 2021");
-    settings.SetToolTip("split_on_SodaType", "Only works in game ver 2021");
-    settings.SetToolTip("split_on_ActualEggs", "Only works in game ver 2021");
+    settings.Add("split_on_collectibles", false);
+    settings.Add("split_on_FireAlarm", false, "Split on fire alarms", "split_on_collectibles");
+    settings.Add("split_on_Extinguisher", false, "Split on fire extinguishers", "split_on_collectibles");
+    settings.Add("split_on_Constellation", false, "Split on seeing constellations", "split_on_collectibles");
+    settings.Add("split_on_ChessPiece", false, "Split on clicking collectible chess pieces", "split_on_collectibles");
+    settings.Add("split_on_Blueprint", false, "Split on clicking blueprints", "split_on_collectibles");
+    settings.Add("split_on_SodaType", false, "Split on getting each of the 7 soda types", "split_on_collectibles");
+    settings.Add("split_on_ActualEggs", false, "Split on collecting literal Easter eggs", "split_on_collectibles");
+    settings.SetToolTip("split_on_collectibles", "Only works in game ver 2021");
 }
 
 init
@@ -163,8 +178,13 @@ init
     }
     else // 26861568 or 589824
     {
-        print("Using scene filename and in-game speedrun timer");
-        version = "2021";
+        if (settings["mp_update"]) {
+            print("MP updated version");
+            version = "2021mp";
+        } else {
+            print("Using scene filename and in-game speedrun timer");
+            version = "2021";
+        }
 
         // true when the active scene is a level
         // this is required because the 'scene' pointer seems to
@@ -195,7 +215,7 @@ update
         current.levelID = memory.ReadValue<byte>(new IntPtr(0xb00b1e5));
         current.isLoading = memory.ReadValue<bool>(new IntPtr(0xb00b1e6));
     }
-    else if (version == "2021" || version == "GamePassPC2021")
+    else if (version == "2021" || version == "GamePassPC2021" || version == "2021mp")
     {
         const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
@@ -213,7 +233,9 @@ update
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il = (version == "2021" || version == "GamePassPC2021") && current.scene != Induction;
+        vars.il = 
+            (version == "2021" || version == "GamePassPC2021" || version == "2021mp") 
+            && current.scene != Induction;
     }
 }
 
@@ -318,7 +340,7 @@ split
         finalAlarmClicked = timer.CurrentSplitIndex == 8 && current.alarmStopped;
     }
 
-    else if (version == "2021" || version == "GamePassPC2021")
+    else if (version == "2021" || version == "GamePassPC2021" || version == "2021mp")
     {
         if (current.scene != null)
         {
