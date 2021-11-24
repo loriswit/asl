@@ -183,7 +183,8 @@ init
             // we check the size of Assembly-CSharp.dll to determine correct version
             string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
             long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize == 1790464 || dllSize == 1799680)
+            // dllSize == 1790464 || dllSize == 1799680 || dllSize == 1800704
+            if (dllSize >= 1790464)
                 mpUpdate = true;
         }
 
