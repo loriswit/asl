@@ -86,24 +86,7 @@ state("SuperliminalSteam", "2021")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
-    
-    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
-    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
-    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
-    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
-    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
-    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
-    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
-}
 
-// updated for version 1.10.2021.11.5.550.43
-state("SuperliminalSteam", "2021mp")
-{
-    double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x130;
-    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb8;
-    bool alarmStopped : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x141;
-    string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
-    
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
     byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
@@ -129,6 +112,41 @@ state("Superliminal", "GamePassPC2021")
     byte7  statusSodaType      : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0xa8, 0x20;
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17e0bd8, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0xc0, 0x20;
 }
+
+// updated for version 1.10.2021.11.5 and later
+state("Superliminal", "2021mp")
+{
+    double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
+// duplicate state matching the Steam process name
+state("SuperliminalSteam", "2021mp")
+{
+    double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
 startup
 {
     settings.Add("il", false, "Individual Level");
@@ -177,19 +195,28 @@ init
     {
         // the module size is the same in version 1.10.2021.11.5 (multiplayer update), but the pointers are different
         bool mpUpdate = false;
-        
-        if (game.ProcessName == "SuperliminalSteam")
+
+        // we check the size of Assembly-CSharp.dll to determine correct version
+        if (game.ProcessName == "Superliminal")
         {
-            // we check the size of Assembly-CSharp.dll to determine correct version
+            string dllPath = modules.First().FileName + "\\..\\Superliminal_Data\\Managed\\Assembly-CSharp.dll";
+            long dllSize = new System.IO.FileInfo(dllPath).Length;
+            if (dllSize == 2350080) // egs v1.10.2021.11.12b & c
+                mpUpdate = true;
+        }
+        else if (game.ProcessName == "SuperliminalSteam")
+        {
             string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
             long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize == 1790464 || dllSize == 1799680)
+            if (dllSize == 1790464 || // steam v1.10.2021.11.5
+                dllSize == 1799680 || // steam v1.10.2021.11.12-858.39b
+                dllSize == 1800704)   // steam v1.10.2021.11.12-858.39c
                 mpUpdate = true;
         }
 
         if (mpUpdate)
         {
-            print("MP updated version");
+            print("2021 multiplayer update");
             version = "2021mp";
         }
         else
@@ -204,7 +231,7 @@ init
         vars.inLevel = false;
     }
 
-    // the name of the checkpoint, 
+    // the name of the checkpoint,
     //   corresponding to current.checkpointNamePtr
     //                    and old.checkpointNamePtr
     vars.cp_name = "";
@@ -232,7 +259,6 @@ update
         const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
             vars.inLevel = true;
-        
     }
 
     vars.split_on_cp = settings["split_on_cp"];
@@ -245,8 +271,8 @@ update
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il = 
-            (version == "2021" || version == "GamePassPC2021" || version == "2021mp") 
+        vars.il =
+            (version == "2021" || version == "GamePassPC2021" || version == "2021mp")
             && current.scene != Induction;
     }
 }
@@ -365,7 +391,7 @@ split
 
             const string Retrospect = "Assets/_Levels/_LiveFolder/ACT03/EndingMontage/EndingMontage_Live.unity";
             finalAlarmClicked = current.scene == Retrospect && current.alarmStopped;
-            
+
             bool diffFireAlarm = settings["split_on_FireAlarm"] && !Enumerable.SequenceEqual(current.statusFireAlarm, old.statusFireAlarm);
             bool diffExtinguisher = settings["split_on_Extinguisher"] && !Enumerable.SequenceEqual(current.statusExtinguisher, old.statusExtinguisher);
             bool diffConstellation = settings["split_on_Constellation"] && !Enumerable.SequenceEqual(current.statusConstellation, old.statusConstellation);
@@ -383,9 +409,9 @@ split
             collectibleUpdated |= diffActualEggs;
         }
     }
-    
+
     if (vars.split_on_cp)
-        checkpointUpdated = current.checkpointNamePtr != 0 
+        checkpointUpdated = current.checkpointNamePtr != 0
             && !vars.cp_name.Equals(vars.old_cp_name)
             && !vars.cp_name.Equals("")
             && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))
