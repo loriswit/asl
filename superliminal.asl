@@ -193,16 +193,17 @@ init
     }
     else // 26861568 or 589824
     {
-        // the module size is the same in version 1.10.2021.11.5 (multiplayer update), but the pointers are different
-        bool mpUpdate = false;
+        print("Using scene filename and in-game speedrun timer");
+        version = "2021";
 
-        // we check the size of Assembly-CSharp.dll to determine correct version
+        // we still need to check the size of Assembly-CSharp.dll to determine the exact version
+        // because the pointers have changed with the multiplayer update
         if (game.ProcessName == "Superliminal")
         {
             string dllPath = modules.First().FileName + "\\..\\Superliminal_Data\\Managed\\Assembly-CSharp.dll";
             long dllSize = new System.IO.FileInfo(dllPath).Length;
             if (dllSize == 2350080) // egs v1.10.2021.11.12b & c
-                mpUpdate = true;
+                version = "2021mp";
         }
         else if (game.ProcessName == "SuperliminalSteam")
         {
@@ -210,20 +211,13 @@ init
             long dllSize = new System.IO.FileInfo(dllPath).Length;
             if (dllSize == 1790464 || // steam v1.10.2021.11.5
                 dllSize == 1799680 || // steam v1.10.2021.11.12-858.39b
-                dllSize == 1800704)   // steam v1.10.2021.11.12-858.39c
-                mpUpdate = true;
+                dllSize == 1800704 || // steam v1.10.2021.11.12-858.39c
+                dllSize == 1830912)   // steam v1.10.2021.12.16
+                version = "2021mp";
         }
 
-        if (mpUpdate)
-        {
-            print("2021 multiplayer update");
-            version = "2021mp";
-        }
-        else
-        {
-            print("Using scene filename and in-game speedrun timer");
-            version = "2021";
-        }
+        if (version == "2021mp")
+            print("Multiplayer update detected");
 
         // true when the active scene is a level
         // this is required because the 'scene' pointer seems to
