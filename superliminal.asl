@@ -202,17 +202,16 @@ init
         {
             string dllPath = modules.First().FileName + "\\..\\Superliminal_Data\\Managed\\Assembly-CSharp.dll";
             long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize == 2350080) // egs v1.10.2021.11.12b & c
+            if (dllSize != 2381312 && // egs v1.10.2020.12.10
+                dllSize != 2293760)   // egs v1.10.2021.4.19 & v1.10.2021.5.10
                 version = "2021mp";
         }
         else if (game.ProcessName == "SuperliminalSteam")
         {
             string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
             long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize == 1790464 || // steam v1.10.2021.11.5
-                dllSize == 1799680 || // steam v1.10.2021.11.12-858.39b
-                dllSize == 1800704 || // steam v1.10.2021.11.12-858.39c
-                dllSize == 1830912)   // steam v1.10.2021.12.16
+            if (dllSize != 1831936 && // steam v1.10.2020.12.10
+                dllSize != 1744384)   // steam v1.10.2021.4.18 & v1.10.2021.5.10
                 version = "2021mp";
         }
 
