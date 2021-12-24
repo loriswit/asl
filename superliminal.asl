@@ -147,6 +147,23 @@ state("SuperliminalSteam", "2021mp")
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
+// duplicate state matching the GOG process name
+state("SuperliminalGOG", "2021mp")
+{
+    double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
 startup
 {
     settings.Add("il", false, "Individual Level");
@@ -179,7 +196,8 @@ init
         print("Using Hot Coffee Mod");
         version = "2019";
     }
-    else if (modules[4].ModuleMemorySize == 25563136)
+    else if (modules[4].ModuleMemorySize == 25563136 ||
+             modules[4].ModuleMemorySize == 24654280) // gog v1.10.2020.11.4
     {
         print("Using in-game speedrun timer");
         version = "2020";
@@ -191,7 +209,7 @@ init
 
         vars.inLevel = false;
     }
-    else // 26861568 or 589824
+    else
     {
         print("Using scene filename and in-game speedrun timer");
         version = "2021";
@@ -212,6 +230,14 @@ init
             long dllSize = new System.IO.FileInfo(dllPath).Length;
             if (dllSize != 1831936 && // steam v1.10.2020.12.10
                 dllSize != 1744384)   // steam v1.10.2021.4.18 & v1.10.2021.5.10
+                version = "2021mp";
+        }
+        else if (game.ProcessName == "SuperliminalGOG")
+        {
+            string dllPath = modules.First().FileName + "\\..\\SuperliminalGOG_Data\\Managed\\Assembly-CSharp.dll";
+            long dllSize = new System.IO.FileInfo(dllPath).Length;
+            if (dllSize != 1824768 && // gog v1.10.2020.12.10
+                dllSize != 1736704)   // gog v1.10.2021.5.10
                 version = "2021mp";
         }
 
