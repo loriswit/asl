@@ -147,7 +147,7 @@ state("SuperliminalSteam", "2021mp")
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
-// gog v1.10.2021.11.12.858.39
+// duplicate state matching the GOG process name
 state("SuperliminalGOG", "2021mp")
 {
     double timer : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x130;
