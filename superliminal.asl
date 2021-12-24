@@ -209,7 +209,7 @@ init
 
         vars.inLevel = false;
     }
-    else // 26861568 or 589824 or 25925064 for gog v1.10.2021.11.12 & v1.10.2020.12.10 & v1.10.2020.5.10
+    else
     {
         print("Using scene filename and in-game speedrun timer");
         version = "2021";
