@@ -197,7 +197,7 @@ init
         version = "2019";
     }
     else if (modules[4].ModuleMemorySize == 25563136 ||
-             modules[4].ModuleMemorySize == 24654280)// gog v1.10.2020.11.4
+             modules[4].ModuleMemorySize == 24654280) // gog v1.10.2020.11.4
     {
         print("Using in-game speedrun timer");
         version = "2020";
