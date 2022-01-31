@@ -191,18 +191,20 @@ startup
 init
 {
     // check size of UnityPlayer.dll to determine version
-    if (modules[4].ModuleMemorySize == 25210880)
+    var unitySize = Array.Find(modules, m => m.ModuleName == "UnityPlayer.dll").ModuleMemorySize;
+
+    if (unitySize == 25210880)
     {
         print("Using Hot Coffee Mod");
         version = "2019";
     }
-    else if (modules[4].ModuleMemorySize == 25563136 ||
-             modules[4].ModuleMemorySize == 24654280) // gog v1.10.2020.11.4
+    else if (unitySize == 25563136 ||
+             unitySize == 24654280) // gog v1.10.2020.11.4
     {
         print("Using in-game speedrun timer");
         version = "2020";
     }
-    else if (modules[4].ModuleMemorySize == 26968064)
+    else if (unitySize == 26968064)
     {
         print("Game Pass PC: Using scene filename and in-game speedrun timer");
         version = "GamePassPC2021";
