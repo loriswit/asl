@@ -191,15 +191,7 @@ startup
 init
 {
     // check size of UnityPlayer.dll to determine version
-    long unitySize = 0;
-
-    for (int i = 0; i < modules.Length; i++)
-    {
-        if (modules[i].ModuleName == "UnityPlayer.dll")
-        {
-            unitySize = modules[i].ModuleMemorySize;
-        }
-    }
+    var unitySize = Array.Find(modules, m => m.ModuleName == "UnityPlayer.dll").ModuleMemorySize;
 
     if (unitySize == 25210880)
     {
