@@ -164,10 +164,61 @@ state("SuperliminalGOG", "2021mp")
     byte8  statusActualEggs    : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
 }
 
+// updated for version 1.10.2022.2.20 and later
+state("Superliminal", "2022")
+{
+    double timer : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
+// duplicate state matching the Steam process name
+state("SuperliminalSteam", "2022")
+{
+    double timer : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
+// duplicate state matching the GOG process name
+state("SuperliminalGOG", "2022")
+{
+    double timer : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x130;
+    long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
+    bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
+    string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0xc0, 0x20;
+}
+
 startup
 {
     settings.Add("il", false, "Individual Level");
-    settings.SetToolTip("il", "Only works with game version 2021");
+    settings.SetToolTip("il", "Only works with game version 2021 and beyond");
 
     settings.Add("split_on_cp", false, "Split on checkpoints");
     settings.SetToolTip("split_on_cp", "Use this with a split file that supports checkpoints.");
@@ -185,13 +236,14 @@ startup
     settings.Add("split_on_Blueprint", false, "Split on clicking blueprints", "split_on_collectibles");
     settings.Add("split_on_SodaType", false, "Split on getting each of the 7 soda types", "split_on_collectibles");
     settings.Add("split_on_ActualEggs", false, "Split on collecting literal Easter eggs", "split_on_collectibles");
-    settings.SetToolTip("split_on_collectibles", "Only works in game ver 2021");
+    settings.SetToolTip("split_on_collectibles", "Only works in game ver 2021 and beyond");
 }
 
 init
 {
     // check size of UnityPlayer.dll to determine version
     var unitySize = Array.Find(modules, m => m.ModuleName == "UnityPlayer.dll").ModuleMemorySize;
+    vars.since2021 = false;
 
     if (unitySize == 25210880)
     {
@@ -208,43 +260,55 @@ init
     {
         print("Game Pass PC: Using scene filename and in-game speedrun timer");
         version = "GamePassPC2021";
+        vars.since2021 = true;
 
         vars.inLevel = false;
     }
     else
     {
         print("Using scene filename and in-game speedrun timer");
-        version = "2021";
+        vars.since2021 = true;
 
-        // we still need to check the size of Assembly-CSharp.dll to determine the exact version
-        // because the pointers have changed with the multiplayer update
-        if (game.ProcessName == "Superliminal")
+        if (unitySize != 27074560)
         {
-            string dllPath = modules.First().FileName + "\\..\\Superliminal_Data\\Managed\\Assembly-CSharp.dll";
-            long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize != 2381312 && // egs v1.10.2020.12.10
-                dllSize != 2293760)   // egs v1.10.2021.4.19 & v1.10.2021.5.10
-                version = "2021mp";
-        }
-        else if (game.ProcessName == "SuperliminalSteam")
-        {
-            string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
-            long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize != 1831936 && // steam v1.10.2020.12.10
-                dllSize != 1744384)   // steam v1.10.2021.4.18 & v1.10.2021.5.10
-                version = "2021mp";
-        }
-        else if (game.ProcessName == "SuperliminalGOG")
-        {
-            string dllPath = modules.First().FileName + "\\..\\SuperliminalGOG_Data\\Managed\\Assembly-CSharp.dll";
-            long dllSize = new System.IO.FileInfo(dllPath).Length;
-            if (dllSize != 1824768 && // gog v1.10.2020.12.10
-                dllSize != 1736704)   // gog v1.10.2021.5.10
-                version = "2021mp";
-        }
+            version = "2021";
 
-        if (version == "2021mp")
-            print("Multiplayer update detected");
+            // we still need to check the size of Assembly-CSharp.dll to determine the exact version
+            // because the pointers have changed with the multiplayer update
+            if (game.ProcessName == "Superliminal")
+            {
+                string dllPath = modules.First().FileName + "\\..\\Superliminal_Data\\Managed\\Assembly-CSharp.dll";
+                long dllSize = new System.IO.FileInfo(dllPath).Length;
+                if (dllSize != 2381312 && // egs v1.10.2020.12.10
+                    dllSize != 2293760)   // egs v1.10.2021.4.19 & v1.10.2021.5.10
+                    version = "2021mp";
+            }
+            else if (game.ProcessName == "SuperliminalSteam")
+            {
+                string dllPath = modules.First().FileName + "\\..\\SuperliminalSteam_Data\\Managed\\Assembly-CSharp.dll";
+                long dllSize = new System.IO.FileInfo(dllPath).Length;
+                if (dllSize != 1831936 && // steam v1.10.2020.12.10
+                    dllSize != 1744384)   // steam v1.10.2021.4.18 & v1.10.2021.5.10
+                    version = "2021mp";
+            }
+            else if (game.ProcessName == "SuperliminalGOG")
+            {
+                string dllPath = modules.First().FileName + "\\..\\SuperliminalGOG_Data\\Managed\\Assembly-CSharp.dll";
+                long dllSize = new System.IO.FileInfo(dllPath).Length;
+                if (dllSize != 1824768 && // gog v1.10.2020.12.10
+                    dllSize != 1736704)   // gog v1.10.2021.5.10
+                    version = "2021mp";
+            }
+
+            if (version == "2021mp")
+                print("Multiplayer update detected");
+        }
+        else
+        {
+            // unitySize == 27074560: 2022.2
+            version = "2022";
+            print("2022.2 detected");
+        }
 
         // true when the active scene is a level
         // this is required because the 'scene' pointer seems to
@@ -255,12 +319,12 @@ init
     // the name of the checkpoint,
     //   corresponding to current.checkpointNamePtr
     //                    and old.checkpointNamePtr
-    vars.cp_name = "";
-    vars.old_cp_name = "";
+    vars.cpName = "";
+    vars.oldCpName = "";
 
     if (settings["split_on_cp"])
     {
-        vars.split_on_cp = true;
+        vars.splitOnCp = true;
         print("Splitting on checkpoints");
     }
 
@@ -275,26 +339,24 @@ update
         current.levelID = memory.ReadValue<byte>(new IntPtr(0xb00b1e5));
         current.isLoading = memory.ReadValue<bool>(new IntPtr(0xb00b1e6));
     }
-    else if (version == "2021" || version == "GamePassPC2021" || version == "2021mp")
+    else if (vars.since2021)
     {
         const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
             vars.inLevel = true;
     }
 
-    vars.split_on_cp = settings["split_on_cp"];
+    vars.splitOnCp = settings["split_on_cp"];
 
-    vars.old_cp_name = vars.cp_name;
+    vars.oldCpName = vars.cpName;
     if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
-        vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
+        vars.cpName = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
 
     if (settings["il"])
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il =
-            (version == "2021" || version == "GamePassPC2021" || version == "2021mp")
-            && current.scene != Induction;
+        vars.il = vars.since2021 && current.scene != Induction;
     }
 }
 
@@ -399,7 +461,7 @@ split
         finalAlarmClicked = timer.CurrentSplitIndex == 8 && current.alarmStopped;
     }
 
-    else if (version == "2021" || version == "GamePassPC2021" || version == "2021mp")
+    else if (vars.since2021)
     {
         if (current.scene != null)
         {
@@ -431,12 +493,12 @@ split
         }
     }
 
-    if (vars.split_on_cp)
+    if (vars.splitOnCp)
         checkpointUpdated = current.checkpointNamePtr != 0
-            && !vars.cp_name.Equals(vars.old_cp_name)
-            && !vars.cp_name.Equals("")
-            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))
-            && (settings["split_WalkThroughShadow"] || !vars.cp_name.Equals("_WalkThroughShadow"));
+            && !vars.cpName.Equals(vars.oldCpName)
+            && !vars.cpName.Equals("")
+            && (settings["split_ParkingLot"] || !vars.cpName.Equals("_ParkingLot"))
+            && (settings["split_WalkThroughShadow"] || !vars.cpName.Equals("_WalkThroughShadow"));
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated || collectibleUpdated;
 }
