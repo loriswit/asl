@@ -243,7 +243,7 @@ init
 {
     // check size of UnityPlayer.dll to determine version
     var unitySize = Array.Find(modules, m => m.ModuleName == "UnityPlayer.dll").ModuleMemorySize;
-    vars.since_2021 = false;
+    vars.since2021 = false;
 
     if (unitySize == 25210880)
     {
@@ -260,14 +260,14 @@ init
     {
         print("Game Pass PC: Using scene filename and in-game speedrun timer");
         version = "GamePassPC2021";
-        vars.since_2021 = true;
+        vars.since2021 = true;
 
         vars.inLevel = false;
     }
     else
     {
         print("Using scene filename and in-game speedrun timer");
-        vars.since_2021 = true;
+        vars.since2021 = true;
 
         if (unitySize != 27074560)
         {
@@ -319,12 +319,12 @@ init
     // the name of the checkpoint,
     //   corresponding to current.checkpointNamePtr
     //                    and old.checkpointNamePtr
-    vars.cp_name = "";
-    vars.old_cp_name = "";
+    vars.cpName = "";
+    vars.oldCpName = "";
 
     if (settings["split_on_cp"])
     {
-        vars.split_on_cp = true;
+        vars.splitOnCp = true;
         print("Splitting on checkpoints");
     }
 
@@ -339,26 +339,24 @@ update
         current.levelID = memory.ReadValue<byte>(new IntPtr(0xb00b1e5));
         current.isLoading = memory.ReadValue<bool>(new IntPtr(0xb00b1e6));
     }
-    else if (vars.since_2021)
+    else if (vars.since2021)
     {
         const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
         if (!vars.inLevel && current.scene != null && current.scene.StartsWith(LevelPrefix))
             vars.inLevel = true;
     }
 
-    vars.split_on_cp = settings["split_on_cp"];
+    vars.splitOnCp = settings["split_on_cp"];
 
-    vars.old_cp_name = vars.cp_name;
+    vars.oldCpName = vars.cpName;
     if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
-        vars.cp_name = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
+        vars.cpName = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
 
     if (settings["il"])
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il =
-            (vars.since_2021)
-            && current.scene != Induction;
+        vars.il = vars.since2021 && current.scene != Induction;
     }
 }
 
@@ -463,7 +461,7 @@ split
         finalAlarmClicked = timer.CurrentSplitIndex == 8 && current.alarmStopped;
     }
 
-    else if (vars.since_2021)
+    else if (vars.since2021)
     {
         if (current.scene != null)
         {
@@ -495,12 +493,12 @@ split
         }
     }
 
-    if (vars.split_on_cp)
+    if (vars.splitOnCp)
         checkpointUpdated = current.checkpointNamePtr != 0
-            && !vars.cp_name.Equals(vars.old_cp_name)
-            && !vars.cp_name.Equals("")
-            && (settings["split_ParkingLot"] || !vars.cp_name.Equals("_ParkingLot"))
-            && (settings["split_WalkThroughShadow"] || !vars.cp_name.Equals("_WalkThroughShadow"));
+            && !vars.cpName.Equals(vars.oldCpName)
+            && !vars.cpName.Equals("")
+            && (settings["split_ParkingLot"] || !vars.cpName.Equals("_ParkingLot"))
+            && (settings["split_WalkThroughShadow"] || !vars.cpName.Equals("_WalkThroughShadow"));
 
     return enteredNextLevel || finalAlarmClicked || checkpointUpdated || collectibleUpdated;
 }
