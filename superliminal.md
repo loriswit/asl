@@ -48,7 +48,7 @@ Conditions: the size of UnityPlayer.dll is neither of the ones above, and the si
 
 The auto-splitter works by reading from the in-game timer. It splits by reading the current scene filename.
 
-## 2021 (multiplayer update)
+### 2021 (multiplayer update)
 
 The auto-splitter works the same as above, but the pointers are slightly different.
 
@@ -57,9 +57,19 @@ Compatible game versions:
 - 1.10.2021.11.12
 - 1.10.2021.12.16
 
-Conditions: the size of UnityPlayer.dll is neither of the ones above, and the size of Assembly-CSharp.dll must be one of the following:
+Conditions: the size of UnityPlayer.dll is neither of the ones above or below, and the size of Assembly-CSharp.dll must be one of the following:
 - **1 790 464** (Steam v1.10.2021.11.5)
 - **1 799 680** (Steam v1.10.2021.11.12-858.39b)
 - **1 800 704** (Steam v1.10.2021.11.12-858.39c)
 - **1 830 912** (Steam v1.10.2021.12.16)
 - **2 350 080** (EGS v1.10.2021.11.12-858.39b & v1.10.2021.11.12-858.39c)
+
+### 2022
+
+The auto-splitter works the same as above, but the pointers are slightly different.
+
+Compatible game versions:
+
+- 1.10.2022.2.20
+
+Conditions: the size of UnityPlayer.dll is **27 074 560**.
