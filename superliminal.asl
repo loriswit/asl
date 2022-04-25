@@ -237,6 +237,19 @@ startup
     settings.Add("split_on_SodaType", false, "Split on getting each of the 7 soda types", "split_on_collectibles");
     settings.Add("split_on_ActualEggs", false, "Split on collecting literal Easter eggs", "split_on_collectibles");
     settings.SetToolTip("split_on_collectibles", "Only works in game ver 2021 and beyond");
+
+    if (timer.CurrentTimingMethod == TimingMethod.RealTime)
+    {
+        var answer = MessageBox.Show(
+            "LiveSplit is currently comparing against real time. " +
+            "However, this auto-splitter requires comparing against game time.\n\n" +
+            "Do you want to switch now?",
+            "Superliminal auto-splitter",
+            MessageBoxButtons.YesNo);
+
+        if (answer == DialogResult.Yes)
+            timer.CurrentTimingMethod = TimingMethod.GameTime;
+    }
 }
 
 init
