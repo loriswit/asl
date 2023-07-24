@@ -6,7 +6,7 @@ Here goes some documentation about the auto-splitter.
 
 To detect the running game version, we start by checking the size of the 4th module of the game process (usually UnityPlayer.dll, which reflects the game engine version), then if needed, we also check the size of Assembly-CSharp.dll through the file system.
 
-The game versions are split into **three main groups**.
+The game versions are split into **four main groups - 2019, 2020 pre-IGT, 2020, 2021/2**.
 
 ### 2019
 
@@ -18,6 +18,15 @@ Compatible game versions:
 Condition: the size of UnityPlayer.dll is **25 210 880**
 
 The auto-splitter works by reading the level number and the "is loading" state using specific **static** addresses. This requires the Hot Coffee Mod to be installed in order for the game to write the expected values to these addresses.
+
+### 2020 (Pre-IGT)
+
+Compatible game versions:
+- 1.10.2020.7.6
+
+Condition: the size of UnityPlayer.dll is **25 579 520**
+
+The auto-splitter works by reading the level number and the paused state using specific addresses, without requiring the Hot Coffee Mod to be installed. It also uses the x position for starting at the same point as the IGT does in newer versions.
 
 ### 2020
 
@@ -69,7 +78,6 @@ Conditions: the size of UnityPlayer.dll is neither of the ones above or below, a
 The auto-splitter works the same as above, but the pointers are slightly different.
 
 Compatible game versions:
-
 - 1.10.2022.2.20
 
 Conditions: the size of UnityPlayer.dll is **27 074 560**.
