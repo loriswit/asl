@@ -25,6 +25,47 @@ state("SuperliminalSteam", "2019")
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0xe8, 0x28, 0x80, 0x18;
 }
 
+state("Superliminal", "2020Jul")
+{
+    // 0 = load, 200 = menu, 104 = induction, 121 = optical, 132 = cubism, 210 = blackout, 169 = clone, 161 = dollhouse, 78 = labyrinth, 242 = whitespace, 47 = retrospect
+	byte level: "UnityPlayer.dll", 0x1683A80, 0x2C8;
+
+    // 0 = unpaused, 256 = paused
+	int paused: "GameAssembly.dll", 0x1D689E8, 0xB8, 0x0, 0x40;
+
+    // x position
+	float x: "fmodstudio.dll", 0x2B3820, 0xD8;
+    
+    // true whenever any alarm clock is clicked, set back to false when entering a level
+	bool alarm: "fmodstudio.dll", 0x2B3CF0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
+
+    // status arrays for each of the 7 types of player actions.
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0xc0, 0x20;
+}
+
+// duplicate state matching the Steam process name
+state("SuperliminalSteam", "2020Jul")
+{
+	byte level: "UnityPlayer.dll", 0x1683A80, 0x2C8;
+	int paused: "GameAssembly.dll", 0x1D689E8, 0xB8, 0x0, 0x40;
+	float x: "fmodstudio.dll", 0x2B3820, 0xD8;
+	bool alarm: "fmodstudio.dll", 0x2B3CF0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
+
+    byte67 statusFireAlarm     : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x30, 0x20;
+    byte94 statusExtinguisher  : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x48, 0x20;
+    byte7  statusConstellation : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x60, 0x20;
+    byte15 statusChessPiece    : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x78, 0x20;
+    byte15 statusBlueprint     : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x90, 0x20;
+    byte7  statusSodaType      : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0xa8, 0x20;
+    byte8  statusActualEggs    : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0xc0, 0x20;
+}
+
 // starting from v1.10.2020.11.4, the game has a speedrun timer, so we can read it directly
 state("Superliminal", "2020")
 {
@@ -263,6 +304,11 @@ init
         print("Using Hot Coffee Mod");
         version = "2019";
     }
+    else if (unitySize == 25579520) // v1.10.2020.7.6
+    {
+        print("Using 7.6 timing");
+        version = "2020Jul";
+    }
     else if (unitySize == 25563136 ||
              unitySize == 24654280) // gog v1.10.2020.11.4
     {
@@ -362,20 +408,20 @@ update
     vars.splitOnCp = settings["split_on_cp"];
 
     vars.oldCpName = vars.cpName;
-    if (current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
+    if (version != "2020Jul" && current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) // 2020.7.6 is excluded for now
         vars.cpName = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
 
     if (settings["il"])
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il = vars.since2021 && current.scene != Induction;
+        vars.il = (vars.since2021 && current.scene != Induction) || (version == "2020Jul" && current.level!=104);
     }
 }
 
 gameTime
 {
-    if (version != "2019" && !vars.il)
+    if (version != "2019" && version != "2020Jul" && !vars.il)
         return TimeSpan.FromSeconds(current.timer);
 
     return null;
@@ -391,6 +437,9 @@ isLoading
     else if (version == "2019")
         loading = current.isLoading;
 
+    else if (version == "2020Jul")
+        loading = current.paused==256 || current.level==200 || current.level==0;
+
     else
         loading = old.timer == current.timer;
 
@@ -403,13 +452,21 @@ start
 
     if (vars.il)
     {
-        const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
-        bool inLevel = current.scene != null && current.scene.StartsWith(LevelPrefix);
-        startedInduction = inLevel && current.scene != old.scene;
+        if(version=="2020Jul")
+            startedInduction = old.level==0 && current.level!=0 && current.level!=200;
+        else{
+            const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
+            bool inLevel = current.scene != null && current.scene.StartsWith(LevelPrefix);
+            startedInduction = inLevel && current.scene != old.scene;
+        }
     }
 
     else if (version == "2019")
         startedInduction = current.levelID == 1 && current.levelID != old.levelID;
+
+    else if (version == "2020Jul"){
+        startedInduction = current.level==104 && current.x<=44.018 && current.x>43.5;
+    }
 
     else
         startedInduction = current.timer > 0 && old.timer != current.timer;
@@ -424,6 +481,12 @@ reset
 
     if (version == "2019")
         enteredInduction = current.levelID == 1 && current.levelID != old.levelID;
+
+    else if (version == "2020Jul")
+    {
+        enteredInduction = current.level==104 && current.x>44.5 && current.x<45;
+        inMainMenu = current.level != old.level && current.level==200;
+    }
 
     else
     {
@@ -474,6 +537,12 @@ split
         finalAlarmClicked = timer.CurrentSplitIndex == 8 && current.alarmStopped;
     }
 
+    else if (version == "2020Jul")
+    {
+        enteredNextLevel = old.level!=0 && current.level==0;
+        finalAlarmClicked = current.level==47 && current.alarm && !old.alarm;
+    }
+
     else if (vars.since2021)
     {
         if (current.scene != null)
@@ -506,7 +575,7 @@ split
         }
     }
 
-    if (vars.splitOnCp)
+    if (version != "2020Jul" && vars.splitOnCp) // 2020.7.6 is excluded for now
         checkpointUpdated = current.checkpointNamePtr != 0
             && !vars.cpName.Equals(vars.oldCpName)
             && !vars.cpName.Equals("")
