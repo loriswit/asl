@@ -407,15 +407,16 @@ update
 
     vars.splitOnCp = settings["split_on_cp"];
 
+    // checkpoints not supported with v2020.7.6 for now
     vars.oldCpName = vars.cpName;
-    if (version != "2020Jul" && current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr) // 2020.7.6 is excluded for now
+    if (version != "2020Jul" && current.checkpointNamePtr != 0 && current.checkpointNamePtr != old.checkpointNamePtr)
         vars.cpName = memory.ReadString((IntPtr)(current.checkpointNamePtr + 0x14), 256);
 
     if (settings["il"])
     {
         // use regular timing method for Induction and for older game versions
         const string Induction = "Assets/_Levels/_LiveFolder/ACT01/TestChamber/TestChamber_Live.unity";
-        vars.il = (vars.since2021 && current.scene != Induction) || (version == "2020Jul" && current.level!=104);
+        vars.il = (vars.since2021 && current.scene != Induction) || (version == "2020Jul" && current.level != 104);
     }
 }
 
@@ -438,7 +439,7 @@ isLoading
         loading = current.isLoading;
 
     else if (version == "2020Jul")
-        loading = current.paused==256 || current.level==200 || current.level==0;
+        loading = current.paused == 256 || current.level == 200 || current.level == 0;
 
     else
         loading = old.timer == current.timer;
@@ -452,9 +453,9 @@ start
 
     if (vars.il)
     {
-        if(version=="2020Jul")
-            startedInduction = old.level==0 && current.level!=0 && current.level!=200;
-        else{
+        if (version == "2020Jul")
+            startedInduction = old.level == 0 && current.level != 0 && current.level != 200;
+        else {
             const string LevelPrefix = "Assets/_Levels/_LiveFolder/ACT";
             bool inLevel = current.scene != null && current.scene.StartsWith(LevelPrefix);
             startedInduction = inLevel && current.scene != old.scene;
@@ -464,9 +465,8 @@ start
     else if (version == "2019")
         startedInduction = current.levelID == 1 && current.levelID != old.levelID;
 
-    else if (version == "2020Jul"){
-        startedInduction = current.level==104 && current.x<=44.018 && current.x>43.5;
-    }
+    else if (version == "2020Jul")
+        startedInduction = current.level == 104 && current.x <= 44.018 && current.x > 43.5;
 
     else
         startedInduction = current.timer > 0 && old.timer != current.timer;
@@ -484,8 +484,8 @@ reset
 
     else if (version == "2020Jul")
     {
-        enteredInduction = current.level==104 && current.x>44.5 && current.x<45;
-        inMainMenu = current.level != old.level && current.level==200;
+        enteredInduction = current.level == 104 && current.x > 44.5 && current.x < 45;
+        inMainMenu = current.level != old.level && current.level == 200;
     }
 
     else
@@ -539,8 +539,8 @@ split
 
     else if (version == "2020Jul")
     {
-        enteredNextLevel = old.level!=0 && current.level==0;
-        finalAlarmClicked = current.level==47 && current.alarm && !old.alarm;
+        enteredNextLevel = old.level != 0 && current.level == 0;
+        finalAlarmClicked = current.level == 47 && current.alarm && !old.alarm;
     }
 
     else if (vars.since2021)
@@ -575,7 +575,8 @@ split
         }
     }
 
-    if (version != "2020Jul" && vars.splitOnCp) // 2020.7.6 is excluded for now
+    // checkpoints not supported with v2020.7.6 for now
+    if (version != "2020Jul" && vars.splitOnCp)
         checkpointUpdated = current.checkpointNamePtr != 0
             && !vars.cpName.Equals(vars.oldCpName)
             && !vars.cpName.Equals("")

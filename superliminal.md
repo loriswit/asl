@@ -6,7 +6,7 @@ Here goes some documentation about the auto-splitter.
 
 To detect the running game version, we start by checking the size of the 4th module of the game process (usually UnityPlayer.dll, which reflects the game engine version), then if needed, we also check the size of Assembly-CSharp.dll through the file system.
 
-The game versions are split into **four main groups - 2019, 2020 pre-IGT, 2020, 2021/2**.
+The game versions are split into **four main groups — 2019, 2020 pre-IGT, 2020, 2021/2**.
 
 ### 2019
 
@@ -78,6 +78,7 @@ Conditions: the size of UnityPlayer.dll is neither of the ones above or below, a
 The auto-splitter works the same as above, but the pointers are slightly different.
 
 Compatible game versions:
+
 - 1.10.2022.2.20
 
 Conditions: the size of UnityPlayer.dll is **27 074 560**.
