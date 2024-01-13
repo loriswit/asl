@@ -144,7 +144,7 @@ state("Superliminal", "GamePassPC")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f4d28, 0x8, 0xb0, 0x28, 0xe8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f4d28, 0x8, 0xb0, 0x28, 0x80;
     string255 scene : "UnityPlayer.dll", 0x1837ee0, 0x48, 0x10, 0x0;
-// IL mode broken
+
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f4d28, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f4d28, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x48, 0x20;
     byte7  statusConstellation : "UnityPlayer.dll", 0x17f4d28, 0x8, 0xb0, 0x28, 0xb0, 0x10, 0x18, 0x60, 0x20;
@@ -206,7 +206,7 @@ state("SuperliminalGOG", "2021mp")
 }
 
 // updated for version 1.10.2022.2.20 and later
-state("Superliminal", "2022+")
+state("Superliminal", "2022")
 {
     double timer : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x130;
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
@@ -223,7 +223,7 @@ state("Superliminal", "2022+")
 }
 
 // duplicate state matching the Steam process name
-state("SuperliminalSteam", "2022+")
+state("SuperliminalSteam", "2022")
 {
     double timer : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x130;
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
@@ -240,7 +240,7 @@ state("SuperliminalSteam", "2022+")
 }
 
 // duplicate state matching the GOG process name
-state("SuperliminalGOG", "2022+")
+state("SuperliminalGOG", "2022")
 {
     double timer : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x130;
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
@@ -365,8 +365,8 @@ init
         else
         {
             // unitySize == 27074560: 2022.2
-            version = "2022+";
-            print("2022.2+ detected");
+            version = "2022";
+            print("2022.2 detected");
         }
 
         // true when the active scene is a level
