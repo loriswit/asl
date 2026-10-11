@@ -264,7 +264,30 @@ state("SuperliminalGOG", "2022")
 startup
 {
     settings.Add("aa", false, "Split on Achievements");
-    settings.SetToolTip("aa", "Only works on the steam 2021 and all 2022+ versions, please turn off all other settings aside from start and split");    
+    settings.SetToolTip("aa", "Only works on the steam 2021 and all 2022+ versions, please turn off all other settings aside from start and split");   
+    settings.Add("aaone", "Split on first achievement", "aa");
+    settings.Add("aatwo", "Split on second achievement", "aa"); 
+    settings.Add("aathree", "Split on third achievement", "aa");
+    settings.Add("aafour", "Split on fourth achievement", "aa");
+    settings.Add("aafive", "Split on fifth achievement", "aa");
+    settings.Add("aasix", "Split on sixth achievement", "aa"); 
+    settings.Add("aaseven", "Split on seventh achievement", "aa");
+    settings.Add("aaeight", "Split on eighth achievement", "aa");
+    settings.Add("aanine", "Split on nineth achievement", "aa");
+    settings.Add("aaten", "Split on tenth achievement", "aa"); 
+    settings.Add("aaeleven", "Split on eleventh achievement", "aa");
+    settings.Add("aatwelve", "Split on twelveth achievement", "aa");
+    settings.Add("aathirteen", "Split on thirteenth achievement", "aa");
+    settings.Add("aafourteen", "Split on fourteenth achievement", "aa"); 
+    settings.Add("aafifteen", "Split on fifteenth achievement", "aa");
+    settings.Add("aasixteen", "Split on sixteenth achievement", "aa");
+    settings.Add("aaseventeen", "Split on seventeenth achievement", "aa");
+    settings.Add("aaeighteen", "Split on eighteenth achievement", "aa"); 
+    settings.Add("aanineteen", "Split on nineteenth achievement", "aa");
+    settings.Add("aatwenty", "Split on twentieth achievement", "aa");
+    settings.Add("aatwentyone", "Split on twenty first achievement", "aa");
+    settings.Add("aatwentytwo", "Split penultimate achievement", "aa");
+    settings.Add("aatwentythree", "Split on last achievement", "aa");
 
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021 and beyond");
@@ -597,8 +620,75 @@ split
 
     else if (settings["aa"])
     {
-	if(current.achv_count == (old.achv_count + 1))
+	if(settings["aaone"] && achv_count == 1)
 	return true;
+
+if(settings["aatwo"] && achv_count == 2)
+	return true;
+
+if(settings["aathree"] && achv_count == 3)
+	return true;
+
+if(settings["aafour"] && achv_count == 4)
+	return true;
+
+if(settings["aafive"] && achv_count == 5)
+	return true;
+
+if(settings["aasix"] && achv_count == 6)
+	return true;
+
+if(settings["aaseven"] && achv_count == 7)
+	return true;
+
+if(settings["aaeight"] && achv_count == 8)
+	return true;
+
+if(settings["aanine"] && achv_count == 9)
+	return true;
+
+if(settings["aaten"] && achv_count == 10)
+	return true;
+
+if(settings["aaeleven"] && achv_count == 11)
+	return true;
+
+if(settings["aatwelve"] && achv_count == 12)
+	return true;
+
+if(settings["aathirteen"] && achv_count == 13)
+	return true;
+
+if(settings["aafourteen"] && achv_count == 14)
+	return true;
+
+if(settings["aafifteen"] && achv_count == 15)
+	return true;
+
+if(settings["aasixteen"] && achv_count == 16)
+	return true;
+
+if(settings["aaseventeen"] && achv_count == 17)
+	return true;
+
+if(settings["aaeighteen"] && achv_count == 18)
+	return true;
+
+if(settings["aanineteen"] && achv_count == 19)
+	return true;
+
+if(settings["aatwenty"] && achv_count == 20)
+	return true;
+
+if(settings["aatwentyone"] && achv_count == 21)
+	return true;
+
+if(settings["aatwentytwo"] && achv_count == 22)
+	return true;
+
+if(settings["aatwentythree"] && achv_count == 23)
+	return true;
+
     }
 
     // checkpoints not supported with v2020.7.6 for now
