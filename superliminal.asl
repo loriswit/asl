@@ -127,6 +127,8 @@ state("SuperliminalSteam", "2021")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
+        // the counter for achievements
+    uint achv_count : "UnityPlayer.dll", 0x017A9300, 0x8, 0x8, 0xC8, 0xA0, 0xB0, 0x28, 0x84;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -212,6 +214,7 @@ state("Superliminal", "2022")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
     string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
+    uint achv_count : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x80, 0x10, 0x30;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -229,6 +232,7 @@ state("SuperliminalSteam", "2022")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
     string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
+    uint achv_count : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x80, 0x10, 0x30;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -246,6 +250,7 @@ state("SuperliminalGOG", "2022")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
     string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
+    uint achv_count : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x80, 0x10, 0x30;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -258,6 +263,9 @@ state("SuperliminalGOG", "2022")
 
 startup
 {
+    settings.Add("aa", false, "Split on Achievements");
+    settings.SetToolTip("aa", "Only works on the steam 2021 and all 2022+ versions, please turn off all other settings aside from start and split");    
+
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021 and beyond");
 
@@ -422,7 +430,7 @@ update
 
 gameTime
 {
-    if (version != "2019" && version != "2020Jul" && !vars.il)
+    if (version != "2019" && version != "2020Jul" && !vars.il && !settings["aa"])
         return TimeSpan.FromSeconds(current.timer);
 
     return null;
@@ -441,8 +449,14 @@ isLoading
     else if (version == "2020Jul")
         loading = current.paused == 256 || current.level == 200 || current.level == 0;
 
-    else
+    else if (!settings["aa"])
         loading = old.timer == current.timer;
+
+    else if (settings["aa"])
+    {
+	const string LoadingScenesPrefix = "Assets/_Levels/_LiveFolder/Misc/LoadingScenes/";
+  	loading = current.scene.StartsWith(LoadingScenesPrefix);
+    }
 
     return loading;
 }
@@ -468,6 +482,12 @@ start
     else if (version == "2020Jul")
         startedInduction = current.level == 104 && current.x <= 44.018 && current.x > 43.5;
 
+    else if (settings["aa"])
+    {
+	const string Menu = "Assets/_Levels/_LiveFolder/Misc/StartScreen_Live.unity";
+        startedInduction = !current.scene.StartsWith(Menu);
+    }
+
     else
         startedInduction = current.timer > 0 && old.timer != current.timer;
 
@@ -488,7 +508,7 @@ reset
         inMainMenu = current.level != old.level && current.level == 200;
     }
 
-    else
+    else if (!settings["aa"])
     {
         enteredInduction = old.timer != current.timer && (current.timer < old.timer || old.timer == 0);
 
@@ -543,7 +563,7 @@ split
         finalAlarmClicked = current.level == 47 && current.alarm && !old.alarm;
     }
 
-    else if (vars.since2021)
+    else if (vars.since2021 && !settings["aa"])
     {
         if (current.scene != null)
         {
@@ -573,6 +593,12 @@ split
             collectibleUpdated |= diffSodaType;
             collectibleUpdated |= diffActualEggs;
         }
+    }
+
+    else if (settings["aa"])
+    {
+	if(current.achv_count == (old.achv_count + 1))
+	return true;
     }
 
     // checkpoints not supported with v2020.7.6 for now
