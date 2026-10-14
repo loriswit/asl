@@ -28,15 +28,16 @@ state("SuperliminalSteam", "2019")
 state("Superliminal", "2020Jul")
 {
     // 0 = load, 200 = menu, 104 = induction, 121 = optical, 132 = cubism, 210 = blackout, 169 = clone, 161 = dollhouse, 78 = labyrinth, 242 = whitespace, 47 = retrospect
-    byte level: "UnityPlayer.dll", 0x1683A80, 0x2C8;
+	byte level: "UnityPlayer.dll", 0x1683A80, 0x2C8;
 
     // 0 = unpaused, 256 = paused
-    int paused: "GameAssembly.dll", 0x1D689E8, 0xB8, 0x0, 0x40;
+	int paused: "GameAssembly.dll", 0x1D689E8, 0xB8, 0x0, 0x40;
 
     // x position
-    float x: "fmodstudio.dll", 0x2B3820, 0xD8;
+	float x: "fmodstudio.dll", 0x2B3820, 0xD8;
+    
     // true whenever any alarm clock is clicked, set back to false when entering a level
-    bool alarm: "fmodstudio.dll", 0x2B3CF0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
+	bool alarm: "fmodstudio.dll", 0x2B3CF0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
 
     // status arrays for each of the 7 types of player actions.
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x30, 0x20;
@@ -51,10 +52,10 @@ state("Superliminal", "2020Jul")
 // duplicate state matching the Steam process name
 state("SuperliminalSteam", "2020Jul")
 {
-    byte level: "UnityPlayer.dll", 0x1683A80, 0x2C8;
-    int paused: "GameAssembly.dll", 0x1D689E8, 0xB8, 0x0, 0x40;
-    float x: "fmodstudio.dll", 0x2B3820, 0xD8;
-    bool alarm: "fmodstudio.dll", 0x2B3CF0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
+	byte level: "UnityPlayer.dll", 0x1683A80, 0x2C8;
+	int paused: "GameAssembly.dll", 0x1D689E8, 0xB8, 0x0, 0x40;
+	float x: "fmodstudio.dll", 0x2B3820, 0xD8;
+	bool alarm: "fmodstudio.dll", 0x2B3CF0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x1692fc0, 0x8, 0xb0, 0x28, 0x90, 0x10, 0x18, 0x48, 0x20;
@@ -126,9 +127,6 @@ state("SuperliminalSteam", "2021")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0xb0;
     bool alarmStopped : "fmodstudio.dll", 0x2b3cf0, 0x28, 0x18, 0x170, 0x100, 0x28, 0x80, 0x18;
     string255 scene : "UnityPlayer.dll", 0x180b4f8, 0x48, 0x10, 0x0;
-
-    // the counter for achievements
-    uint achv_count : "UnityPlayer.dll", 0x017A9300, 0x8, 0x8, 0xC8, 0xA0, 0xB0, 0x28, 0x84;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17c8588, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -214,7 +212,6 @@ state("Superliminal", "2022")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
     string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
-    uint achv_count : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x80, 0x10, 0x30;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -232,7 +229,6 @@ state("SuperliminalSteam", "2022")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
     string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
-    uint achv_count : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x80, 0x10, 0x30;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -250,7 +246,6 @@ state("SuperliminalGOG", "2022")
     long checkpointNamePtr : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0xb8;
     bool alarmStopped : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x141;
     string255 scene : "UnityPlayer.dll", 0x183cf10, 0x48, 0x10, 0x0;
-    uint achv_count : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x80, 0x10, 0x30;
 
     byte67 statusFireAlarm     : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x30, 0x20;
     byte94 statusExtinguisher  : "UnityPlayer.dll", 0x17f9d28, 0x8, 0xb0, 0x28, 0x78, 0x10, 0x18, 0x48, 0x20;
@@ -263,32 +258,6 @@ state("SuperliminalGOG", "2022")
 
 startup
 {
-    settings.Add("aa", false, "Split on Achievements");
-    settings.SetToolTip("aa", "Only works on the steam 2021 and all 2022+ versions, please turn off all other settings aside from start and split");
-    settings.Add("aaone", "Split on first achievement", "aa");
-    settings.Add("aatwo", "Split on second achievement", "aa");
-    settings.Add("aathree", "Split on third achievement", "aa");
-    settings.Add("aafour", "Split on fourth achievement", "aa");
-    settings.Add("aafive", "Split on fifth achievement", "aa");
-    settings.Add("aasix", "Split on sixth achievement", "aa");
-    settings.Add("aaseven", "Split on seventh achievement", "aa");
-    settings.Add("aaeight", "Split on eighth achievement", "aa");
-    settings.Add("aanine", "Split on nineth achievement", "aa");
-    settings.Add("aaten", "Split on tenth achievement", "aa");
-    settings.Add("aaeleven", "Split on eleventh achievement", "aa");
-    settings.Add("aatwelve", "Split on twelveth achievement", "aa");
-    settings.Add("aathirteen", "Split on thirteenth achievement", "aa");
-    settings.Add("aafourteen", "Split on fourteenth achievement", "aa");
-    settings.Add("aafifteen", "Split on fifteenth achievement", "aa");
-    settings.Add("aasixteen", "Split on sixteenth achievement", "aa");
-    settings.Add("aaseventeen", "Split on seventeenth achievement", "aa");
-    settings.Add("aaeighteen", "Split on eighteenth achievement", "aa");
-    settings.Add("aanineteen", "Split on nineteenth achievement", "aa");
-    settings.Add("aatwenty", "Split on twentieth achievement", "aa");
-    settings.Add("aatwentyone", "Split on twenty first achievement", "aa");
-    settings.Add("aatwentytwo", "Split penultimate achievement", "aa");
-    settings.Add("aatwentythree", "Split on last achievement", "aa");
-
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021 and beyond");
 
@@ -453,7 +422,7 @@ update
 
 gameTime
 {
-    if (version != "2019" && version != "2020Jul" && !vars.il && !settings["aa"])
+    if (version != "2019" && version != "2020Jul" && !vars.il)
         return TimeSpan.FromSeconds(current.timer);
 
     return null;
@@ -472,14 +441,8 @@ isLoading
     else if (version == "2020Jul")
         loading = current.paused == 256 || current.level == 200 || current.level == 0;
 
-    else if (!settings["aa"])
+    else
         loading = old.timer == current.timer;
-
-    else if (settings["aa"])
-    {
-        const string LoadingScenesPrefix = "Assets/_Levels/_LiveFolder/Misc/LoadingScenes/";
-        loading = current.scene.StartsWith(LoadingScenesPrefix);
-    }
 
     return loading;
 }
@@ -505,12 +468,6 @@ start
     else if (version == "2020Jul")
         startedInduction = current.level == 104 && current.x <= 44.018 && current.x > 43.5;
 
-    else if (settings["aa"])
-    {
-        const string Menu = "Assets/_Levels/_LiveFolder/Misc/StartScreen_Live.unity";
-        startedInduction = !current.scene.StartsWith(Menu);
-    }
-
     else
         startedInduction = current.timer > 0 && old.timer != current.timer;
 
@@ -531,7 +488,7 @@ reset
         inMainMenu = current.level != old.level && current.level == 200;
     }
 
-    else if (!settings["aa"])
+    else
     {
         enteredInduction = old.timer != current.timer && (current.timer < old.timer || old.timer == 0);
 
@@ -586,7 +543,7 @@ split
         finalAlarmClicked = current.level == 47 && current.alarm && !old.alarm;
     }
 
-    else if (vars.since2021 && !settings["aa"])
+    else if (vars.since2021)
     {
         if (current.scene != null)
         {
@@ -616,78 +573,6 @@ split
             collectibleUpdated |= diffSodaType;
             collectibleUpdated |= diffActualEggs;
         }
-    }
-
-    else if (settings["aa"])
-    {
-        if (settings["aaone"] && achv_count == 1)
-            return true;
-
-        if (settings["aatwo"] && achv_count == 2)
-            return true;
-
-        if (settings["aathree"] && achv_count == 3)
-            return true;
-
-        if (settings["aafour"] && achv_count == 4)
-            return true;
-
-        if (settings["aafive"] && achv_count == 5)
-            return true;
-
-        if (settings["aasix"] && achv_count == 6)
-            return true;
-
-        if (settings["aaseven"] && achv_count == 7)
-            return true;
-
-        if (settings["aaeight"] && achv_count == 8)
-            return true;
-
-        if (settings["aanine"] && achv_count == 9)
-            return true;
-
-        if (settings["aaten"] && achv_count == 10)
-            return true;
-
-        if (settings["aaeleven"] && achv_count == 11)
-            return true;
-
-        if (settings["aatwelve"] && achv_count == 12)
-            return true;
-
-        if (settings["aathirteen"] && achv_count == 13)
-            return true;
-
-        if (settings["aafourteen"] && achv_count == 14)
-            return true;
-
-        if (settings["aafifteen"] && achv_count == 15)
-            return true;
-
-        if (settings["aasixteen"] && achv_count == 16)
-            return true;
-
-        if (settings["aaseventeen"] && achv_count == 17)
-            return true;
-
-        if (settings["aaeighteen"] && achv_count == 18)
-            return true;
-
-        if (settings["aanineteen"] && achv_count == 19)
-            return true;
-
-        if (settings["aatwenty"] && achv_count == 20)
-            return true;
-
-        if (settings["aatwentyone"] && achv_count == 21)
-            return true;
-
-        if (settings["aatwentytwo"] && achv_count == 22)
-            return true;
-
-        if (settings["aatwentythree"] && achv_count == 23)
-            return true;
     }
 
     // checkpoints not supported with v2020.7.6 for now
