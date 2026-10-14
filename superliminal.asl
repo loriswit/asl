@@ -265,29 +265,29 @@ startup
 {
     settings.Add("aa", false, "Split on Achievements");
     settings.SetToolTip("aa", "Only works on the steam 2021 and all 2022+ versions, please turn off all other settings aside from start and split");
-    settings.Add("aaone", "Split on first achievement", "aa");
-    settings.Add("aatwo", "Split on second achievement", "aa");
-    settings.Add("aathree", "Split on third achievement", "aa");
-    settings.Add("aafour", "Split on fourth achievement", "aa");
-    settings.Add("aafive", "Split on fifth achievement", "aa");
-    settings.Add("aasix", "Split on sixth achievement", "aa");
-    settings.Add("aaseven", "Split on seventh achievement", "aa");
-    settings.Add("aaeight", "Split on eighth achievement", "aa");
-    settings.Add("aanine", "Split on nineth achievement", "aa");
-    settings.Add("aaten", "Split on tenth achievement", "aa");
-    settings.Add("aaeleven", "Split on eleventh achievement", "aa");
-    settings.Add("aatwelve", "Split on twelveth achievement", "aa");
-    settings.Add("aathirteen", "Split on thirteenth achievement", "aa");
-    settings.Add("aafourteen", "Split on fourteenth achievement", "aa");
-    settings.Add("aafifteen", "Split on fifteenth achievement", "aa");
-    settings.Add("aasixteen", "Split on sixteenth achievement", "aa");
-    settings.Add("aaseventeen", "Split on seventeenth achievement", "aa");
-    settings.Add("aaeighteen", "Split on eighteenth achievement", "aa");
-    settings.Add("aanineteen", "Split on nineteenth achievement", "aa");
-    settings.Add("aatwenty", "Split on twentieth achievement", "aa");
-    settings.Add("aatwentyone", "Split on twenty first achievement", "aa");
-    settings.Add("aatwentytwo", "Split penultimate achievement", "aa");
-    settings.Add("aatwentythree", "Split on last achievement", "aa");
+    settings.Add("aaone", false, "Split on first achievement", "aa");
+    settings.Add("aatwo", false, "Split on second achievement", "aa");
+    settings.Add("aathree", false, "Split on third achievement", "aa");
+    settings.Add("aafour", false, "Split on fourth achievement", "aa");
+    settings.Add("aafive", false, "Split on fifth achievement", "aa");
+    settings.Add("aasix", false, "Split on sixth achievement", "aa");
+    settings.Add("aaseven", false, "Split on seventh achievement", "aa");
+    settings.Add("aaeight", false, "Split on eighth achievement", "aa");
+    settings.Add("aanine", false, "Split on ninth achievement", "aa");
+    settings.Add("aaten", false, "Split on tenth achievement", "aa");
+    settings.Add("aaeleven", false, "Split on eleventh achievement", "aa");
+    settings.Add("aatwelve", false, "Split on twelfth achievement", "aa");
+    settings.Add("aathirteen", false, "Split on thirteenth achievement", "aa");
+    settings.Add("aafourteen", false, "Split on fourteenth achievement", "aa");
+    settings.Add("aafifteen", false, "Split on fifteenth achievement", "aa");
+    settings.Add("aasixteen", false, "Split on sixteenth achievement", "aa");
+    settings.Add("aaseventeen", false, "Split on seventeenth achievement", "aa");
+    settings.Add("aaeighteen", false, "Split on eighteenth achievement", "aa");
+    settings.Add("aanineteen", false, "Split on nineteenth achievement", "aa");
+    settings.Add("aatwenty", false, "Split on twentieth achievement", "aa");
+    settings.Add("aatwentyone", false, "Split on twenty first achievement", "aa");
+    settings.Add("aatwentytwo", false, "Split on penultimate achievement", "aa");
+    settings.Add("aatwentythree", false, "Split on last achievement", "aa");
 
     settings.Add("il", false, "Individual Level");
     settings.SetToolTip("il", "Only works with game version 2021 and beyond");
@@ -620,73 +620,73 @@ split
 
     else if (settings["aa"])
     {
-        if (settings["aaone"] && achv_count == 1)
+        if (settings["aaone"] && current.achv_count == 1 && old.achv_count == 0)
             return true;
 
-        if (settings["aatwo"] && achv_count == 2)
+        if (settings["aatwo"] && current.achv_count == 2 && old.achv_count == 1)
             return true;
 
-        if (settings["aathree"] && achv_count == 3)
+        if (settings["aathree"] && current.achv_count == 3 && old.achv_count == 2)
             return true;
 
-        if (settings["aafour"] && achv_count == 4)
+        if (settings["aafour"] && current.achv_count == 4 && old.achv_count == 3)
             return true;
 
-        if (settings["aafive"] && achv_count == 5)
+        if (settings["aafive"] && current.achv_count == 5 && old.achv_count == 4)
             return true;
 
-        if (settings["aasix"] && achv_count == 6)
+        if (settings["aasix"] && current.achv_count == 6 && old.achv_count == 5)
             return true;
 
-        if (settings["aaseven"] && achv_count == 7)
+        if (settings["aaseven"] && current.achv_count == 7 && old.achv_count == 6)
             return true;
 
-        if (settings["aaeight"] && achv_count == 8)
+        if (settings["aaeight"] && current.achv_count == 8 && old.achv_count == 7)
             return true;
 
-        if (settings["aanine"] && achv_count == 9)
+        if (settings["aanine"] && current.achv_count == 9 && old.achv_count == 8)
             return true;
 
-        if (settings["aaten"] && achv_count == 10)
+        if (settings["aaten"] && current.achv_count == 10 && old.achv_count == 9)
             return true;
 
-        if (settings["aaeleven"] && achv_count == 11)
+        if (settings["aaeleven"] && current.achv_count == 11 && old.achv_count == 10)
             return true;
 
-        if (settings["aatwelve"] && achv_count == 12)
+        if (settings["aatwelve"] && current.achv_count == 12 && old.achv_count == 11)
             return true;
 
-        if (settings["aathirteen"] && achv_count == 13)
+        if (settings["aathirteen"] && current.achv_count == 13 && old.achv_count == 12)
             return true;
 
-        if (settings["aafourteen"] && achv_count == 14)
+        if (settings["aafourteen"] && current.achv_count == 14 && old.achv_count == 13)
             return true;
 
-        if (settings["aafifteen"] && achv_count == 15)
+        if (settings["aafifteen"] && current.achv_count == 15 && old.achv_count == 14)
             return true;
 
-        if (settings["aasixteen"] && achv_count == 16)
+        if (settings["aasixteen"] && current.achv_count == 16 && old.achv_count == 15)
             return true;
 
-        if (settings["aaseventeen"] && achv_count == 17)
+        if (settings["aaseventeen"] && current.achv_count == 17 && old.achv_count == 16)
             return true;
 
-        if (settings["aaeighteen"] && achv_count == 18)
+        if (settings["aaeighteen"] && current.achv_count == 18 && old.achv_count == 17)
             return true;
 
-        if (settings["aanineteen"] && achv_count == 19)
+        if (settings["aanineteen"] && current.achv_count == 19 && old.achv_count == 18)
             return true;
 
-        if (settings["aatwenty"] && achv_count == 20)
+        if (settings["aatwenty"] && current.achv_count == 20 && old.achv_count == 19)
             return true;
 
-        if (settings["aatwentyone"] && achv_count == 21)
+        if (settings["aatwentyone"] && current.achv_count == 21 && old.achv_count == 20)
             return true;
 
-        if (settings["aatwentytwo"] && achv_count == 22)
+        if (settings["aatwentytwo"] && current.achv_count == 22 && old.achv_count == 21)
             return true;
 
-        if (settings["aatwentythree"] && achv_count == 23)
+        if (settings["aatwentythree"] && current.achv_count == 23 && old.achv_count == 22)
             return true;
     }
 
